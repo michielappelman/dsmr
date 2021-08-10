@@ -1,8 +1,10 @@
-# DSMR component for ESPHome
+# DSMR 2.2/3.0 component for ESPHome
 
 The [SlimmeLezer](https://www.zuidwijk.com/product/slimmelezer/) is a compact build easy to use module to read data via
 the P1 port on a Smart Meter. Based on an ESP8266 (Wemos D1), the SlimmeLezer is perfect to use with
 [ESPHome](https://esphome.io) and integrates seamless into [Home Assistant](https://www.home-assistant.io).
+
+## :warning: DSMR version 2.2/3.0 fork :warning:
 
 This repository is a fork from the original [zuidwijk/dsmr](https://github.com/zuidwijk/dsmr) but adapted to support
 DSMR versions 2.2 and 3.0.
