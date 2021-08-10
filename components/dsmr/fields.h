@@ -342,6 +342,8 @@ DEFINE_FIELD(gas_valve_position, uint8_t, ObisId(0, GAS_MBUS_ID, 24, 4, 0), IntF
  * in m3, including decimal values and capture time (Note: 4.x spec has
  * "hourly value") */
 DEFINE_FIELD(gas_delivered, TimestampedFixedValue, ObisId(0, GAS_MBUS_ID, 24, 2, 1), TimestampedFixedField, units::m3, units::dm3);
+DEFINE_FIELD(gas_delivered_hack, String, ObisId(0, GAS_MBUS_ID, 24, 3, 0), RawField);
+
 /* _BE */
 DEFINE_FIELD(gas_delivered_be, TimestampedFixedValue, ObisId(0, GAS_MBUS_ID, 24, 2, 3), TimestampedFixedField, units::m3, units::dm3);
 

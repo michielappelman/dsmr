@@ -279,6 +279,10 @@ constexpr ObisId gas_delivered::id;
 constexpr char gas_delivered::name_progmem[];
 constexpr const __FlashStringHelper *gas_delivered::name;
 
+constexpr ObisId gas_delivered_hack::id;
+constexpr char gas_delivered_hack::name_progmem[];
+constexpr const __FlashStringHelper *gas_delivered_hack::name;
+
 /* _BE */
 constexpr ObisId gas_delivered_be::id;
 constexpr char gas_delivered_be::name_progmem[];

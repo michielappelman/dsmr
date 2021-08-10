@@ -303,31 +303,12 @@ struct P1Parser {
 
     // Look for ! that terminates the data
     const char *data_end = data_start;
-    uint16_t crc = _crc16_update(0, *str);  // Include the / in CRC
     while (data_end < str + n && *data_end != '!') {
-      crc = _crc16_update(crc, *data_end);
       ++data_end;
     }
 
-    if (data_end >= str + n)
-      return res.fail(F("No checksum found"), data_end);
-
-    crc = _crc16_update(crc, *data_end);  // Include the ! in CRC
-
-    ParseResult<uint16_t> check_res = CrcParser::parse(data_end + 1, str + n);
-    if (check_res.err)
-      return check_res;
-
-    // Check CRC
-    if (check_res.result != crc) {
-      Serial.println(check_res.result);
-      Serial.println(crc);
-
-      return res.fail(F("Checksum mismatch"), data_end + 1);
-    }
-
     res = parse_data(data, data_start, data_end, unknown_error);
-    res.next = check_res.next;
+    res.next = data_end;
     return res;
   }
 
@@ -372,10 +353,12 @@ struct P1Parser {
     // Parse data lines
     while (line_end < end) {
       if (*line_end == '\r' || *line_end == '\n') {
-        ParseResult<void> tmp = parse_line(data, line_start, line_end, unknown_error);
-        if (tmp.err)
-          return tmp;
-        line_start = line_end + 1;
+        if (!(*(line_end + 1) == '(' || *(line_end + 2) == '(')) {
+          ParseResult<void> tmp = parse_line(data, line_start, line_end, unknown_error);
+          if (tmp.err)
+            return tmp;
+          line_start = line_end + 1;
+        }
       }
       line_end++;
     }

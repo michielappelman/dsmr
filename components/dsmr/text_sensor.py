@@ -59,6 +59,11 @@ CONFIG_SCHEMA = cv.Schema(
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
+        cv.Optional("gas_delivered_hack"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+            {
+                cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
+            }
+        ),
         cv.Optional("thermal_equipment_id"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
