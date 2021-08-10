@@ -34,8 +34,8 @@ defined in the code:
 
 ```YAML
 dsmr:
-id: dsmr_instance
-decryption_key: '00112233445566778899AABBCCDDEEFF'
+  id: dsmr_instance
+  decryption_key: '00112233445566778899AABBCCDDEEFF'
 ```
 
 When the key is not set in the code, or when the key changes, it can be set/changes via a Service within Home Assistant,
@@ -44,35 +44,35 @@ created via below api:
 ```YAML
 # Enable Home Assistant API
 api:
-services:
-service: set_dsmr_key
-variables:
-private_key: string
-then:
-- logger.log:
-format: Setting private key %s. Set to empty string to disable
-args: [private_key.c_str()]
-- globals.set:
-id: has_key
-value: !lambda "return private_key.length() == 32;"
-- lambda: |-
-if (private_key.length() == 32)
-private_key.copy(id(stored_decryption_key), 32);
-id(dsmr_instance).set_decryption_key(private_key);
+  services:
+    service: set_dsmr_key
+    variables:
+      private_key: string
+    then:
+      - logger.log:
+          format: Setting private key %s. Set to empty string to disable
+          args: [private_key.c_str()]
+      - globals.set:
+          id: has_key
+          value: !lambda "return private_key.length() == 32;"
+      - lambda: |-
+          if (private_key.length() == 32)
+            private_key.copy(id(stored_decryption_key), 32);
+          id(dsmr_instance).set_decryption_key(private_key);
 ```
 
 In Home Assistant go to Services and select the service `ESPHome: {name}_set_dsmr_key`. There fill in the code received
 from the provider: ![SlimmeLezer_set_key](https://user-images.githubusercontent.com/10123063/127783141-52d3ae77-e02b-4296-a1fb-78ab3bbe5ff3.jpg)
 
-### Different uart
+### Different UART
 The SlimmeLezer is built with a logic inverter on the pcb. Connecting that directly to the Rx of the Wemos, causes that
 it can't be flashed via USB as it constanly pulls the Rx either high or low. Therefor I'm using the 2nd uart, on pin D7.
 That's why the uart is specified on pin D7 in the code:
 
 ```YAML
 uart:
-baud_rate: 115200
-rx_pin: D7
+  baud_rate: 115200
+  rx_pin: D7
 ```
 
 #### UART Settings for different DSMR versions
@@ -81,16 +81,16 @@ DSMR versions 2.2 and 3.0 use different settings for the serial interface:
 
 ```yaml
 uart:
-baud_rate: 9600
-rx_pin: D7
-data_bits: 7
-parity: EVEN
-stop_bits: 1
+  baud_rate: 9600
+  data_bits: 7
+  parity: EVEN
+  stop_bits: 1
+  rx_pin: D7
 ```
 
 This can mess with the logging over the same channel, so it is disabled. You can still see your logs through the API.
 
 ```yaml
 logger:
-baud_rate: 0
+  baud_rate: 0
 ```

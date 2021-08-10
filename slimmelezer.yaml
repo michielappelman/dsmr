@@ -4,7 +4,7 @@ substitutions:
   device_description: "DIY P1 module to read your smart meter"
 
 external_components:
-  - source: github://zuidwijk/dsmr
+  - source: github://michielappelman/dsmr
 
 esphome:
   name: ${device_name}
@@ -43,6 +43,7 @@ captive_portal:
 
 # Enable logging
 logger:
+  baud_rate: 0
 
 # Enable Home Assistant API
 api:
@@ -68,7 +69,10 @@ web_server:
   port: 80
 
 uart:
-  baud_rate: 115200
+  baud_rate: 9600
+  data_bits: 7
+  parity: EVEN
+  stop_bits: 1
   rx_pin: D7
 
 globals:
@@ -109,58 +113,6 @@ sensor:
       accuracy_decimals: 0
       filters:
         - multiply: 1000
-    electricity_failures:
-      name: "Electricity Failures"
-      icon: mdi:alert
-    electricity_long_failures:
-      name: "Long Electricity Failures"
-      icon: mdi:alert
-    voltage_l1:
-      name: "Voltage Phase 1"
-    voltage_l2:
-      name: "Voltage Phase 2"
-    voltage_l3:
-      name: "Voltage Phase 3"
-    current_l1:
-      name: "Current Phase 1"
-    current_l2:
-      name: "Current Phase 2"
-    current_l3:
-      name: "Current Phase 3"
-    power_delivered_l1:
-      name: "Power Consumed Phase 1"
-      accuracy_decimals: 0
-      filters:
-        - multiply: 1000
-    power_delivered_l2:
-      name: "Power Consumed Phase 2"
-      accuracy_decimals: 0
-      filters:
-        - multiply: 1000
-    power_delivered_l3:
-      name: "Power Consumed Phase 3"
-      accuracy_decimals: 0
-      filters:
-        - multiply: 1000
-    power_returned_l1:
-      name: "Power Produced Phase 1"
-      accuracy_decimals: 0
-      filters:
-        - multiply: 1000
-    power_returned_l2:
-      name: "Power Produced Phase 2"
-      accuracy_decimals: 0
-      filters:
-        - multiply: 1000
-    power_returned_l3:
-      name: "Power Produced Phase 3"
-      accuracy_decimals: 0
-      filters:
-        - multiply: 1000
-    gas_delivered:
-      name: "Gas Consumed"
-    gas_delivered_be:
-      name: "Gas Consumed Belgium"
   - platform: uptime
     name: "Uptime"
   - platform: wifi_signal
@@ -175,6 +127,12 @@ text_sensor:
       name: "DSMR Version"
     p1_version_be:
       name: "DSMR Version Belgium"
+    electricity_tariff:
+      name: "Current Energy Tariff"
+    gas_equipment_id:
+      name: "Gas Equipment ID"
+    gas_delivered_hack:
+      name: "Gas Delivered"
   - platform: wifi_info
     ip_address:
       name: "IP Address"
