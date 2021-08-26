@@ -13,11 +13,13 @@ DSMR versions 2.2 and 3.0.
 
 To quickly get DSMR2.2/3.0 support for the SlimmeLezer without impacting working version 4/5 users, this fork was
 created after some discussion in [issue #12](https://github.com/zuidwijk/dsmr/issues/12).
+
 There has now been work on the upstream ESPHome DSMR code to get the changes below incorporated as well and have all
 versions supported in the same codebase. See: [esphome#2157](https://github.com/esphome/esphome/pull/2157)
-Unfortunately, my programming skills (especially with C++) are not sufficient to solve this issue permanently, so until
-someone smart fixes this upstream, we will need to use this repository and its hacks as exactly that: a couple of hacks
-to get it to work.
+
+You can use the [example configuration YAML in that PR](https://github.com/esphome/esphome/pull/2157#issue-712837636)
+to test if the proposed changes work for you. **Please test that configuration first before using the one from this
+repo!** The more we test the faster we can get the required changes merged into the main ESPHome codebase.
 
 ### Incorporated fixes
 
